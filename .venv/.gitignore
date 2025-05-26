@@ -1,3 +1,7 @@
+*.pyc
 __pycache__/
 .env
-*.pyc
+.venv/
+.idea/
+assets/*.ogg
+assets/*.wav
