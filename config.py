@@ -13,20 +13,28 @@ PLAYER2_DESCRIPTION = os.getenv("PLAYER2_DESCRIPTION", "Player 2")
 
 
 GUNS = [
-    (os.getenv("GUNNAME1", "Gun of Destiny"), "gun1.png"),
-    (os.getenv("GUNNAME2", "Love Blaster"), "gun2.png"),
-    (os.getenv("GUNNAME3", "Seed Cannon"), "gun3.png"),
-    (os.getenv("GUNNAME4", "Old Soviet Gun"), "gun4.png"),
-    (os.getenv("GUNNAME5", "Mega P Shooter"), "gun5.png"),
+    (os.getenv("GUNNAME1", "Miotacz Spermy"), "gun1.png"),
+    (os.getenv("GUNNAME2", "Bazooka Płodności"), "gun2.png"),
+    (os.getenv("GUNNAME3", "Armata Rozkoszy"), "gun3.png"),
+    (os.getenv("GUNNAME4", "Karabin Rozrodczy"), "gun4.png"),
+    (os.getenv("GUNNAME5", "Katapulta Namiętności"), "gun5.png"),
 ]
 
 VEHICLES = [
-    (os.getenv("VEHICLENAME1", "Turbo Pig"), "vehicle1.png"),
-    (os.getenv("VEHICLENAME2", "Startup Unicorn"), "vehicle2.png"),
-    (os.getenv("VEHICLENAME3", "Corporate Scooter"), "vehicle3.png"),
-    (os.getenv("VEHICLENAME4", "Escape Boots +5"), "vehicle4.png"),
-    (os.getenv("VEHICLENAME5", "Dream Wagon"), "vehicle5.png"),
+    (os.getenv("VEHICLENAME1", "Świnia"), "vehicle1.png"),
+    (os.getenv("VEHICLENAME2", "Widlak"), "vehicle2.png"),
+    (os.getenv("VEHICLENAME3", "Szambiarka"), "vehicle3.png"),
+    (os.getenv("VEHICLENAME4", "Foka"), "vehicle4.png"),
+    (os.getenv("VEHICLENAME5", "Taczka"), "vehicle5.png"),
 ]
+
+VEHICLE_OLIWIA_IMAGES = {
+    "Świnia": "oliwia_vehicle1.png",
+    "Widlak": "oliwia_vehicle2.png",
+    "Szambiarka": "oliwia_vehicle3.png",
+    "Foka": "oliwia_vehicle4.png",
+    "Taczka": "oliwia_vehicle5.png"
+}
 
 raw_date = os.getenv("WEDDING_DATE", "2024-05-31")
 

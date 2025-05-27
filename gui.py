@@ -6,7 +6,6 @@ from config import (
     PLAYER1_DESCRIPTION,
     PLAYER2_DESCRIPTION,
     WEDDING_DATE_FORMATTED,
-    BABY_HUNT_START,
     GUNS,
     VEHICLES
 )
@@ -152,8 +151,14 @@ def start_gui():
             mbox.showerror("Hola, hola!", "Wybierz pojazd dla Oliwii!")
             return
 
+
         selected_data["gun_name"] = gun
         selected_data["vehicle_name"] = vehicle
+
+        # Dodajemy ID broni i pojazdu (np. gun5, vehicle3)
+        selected_data["gun_id"] = next((f"gun{i + 1}" for i, g in enumerate(GUNS) if g[0] == gun), None)
+        selected_data["vehicle_id"] = next((f"vehicle{i + 1}" for i, v in enumerate(VEHICLES) if v[0] == vehicle), None)
+
         selected_data["gun_image"] = next((g[1] for g in GUNS if g[0] == gun), None)
         selected_data["vehicle_image"] = next((v[1] for v in VEHICLES if v[0] == vehicle), None)
         stop_music()

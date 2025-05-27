@@ -4,21 +4,19 @@ import sys
 import time
 
 from game.items import GUN_STATS, VEHICLE_STATS
-from config import PLAYER1_NAME, PLAYER2_NAME
+from config import PLAYER1_NAME, PLAYER2_NAME, VEHICLE_OLIWIA_IMAGES
 from sound_manager import play_music, stop_music, play_sound
+from config import GUNS
+
 
 from sounds_config import (
     GAME_MUSIC,
-    END_MUSIC,
     GUN_SHOT,
     HIT_HURRA,
-    HIT_GOODJOB,
     FAIL_LAUGH,
     ROUND_START,
     BABY
 )
-
-
 
 os.environ['SDL_VIDEO_CENTERED'] = '1'
 
@@ -26,19 +24,44 @@ os.environ['SDL_VIDEO_CENTERED'] = '1'
 WIDTH, HEIGHT = 1400, 1000
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
-RED = (220, 50, 50)
-BLUE = (50, 50, 255)
+
+PRZEMEK_WIDTH = 140
+PRZEMEK_HEIGHT = 140
+
+OLIWIA_WIDTH = 132
+OLIWIA_HEIGHT = 99
+
 
 PLAYER_WIDTH, PLAYER_HEIGHT = 60, 80
 BULLET_SIZE = 12
 
 MAX_ROUNDS = 5
-ROUND_TIME = 3  # sekundy
+ROUND_TIME = 2 # sekundy
 
 pygame.init()
 play_music(GAME_MUSIC)
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Plemnikator 3000")
+
+# Wczytanie obrazków Przemka z bronią dla każdej broni i kierunku
+
+def load_przemek_images(gun_name):
+    gun_index = [g[0] for g in GUNS].index(gun_name) + 1
+    directions = ["left", "right", "up", "down"]
+    images = {}
+
+    for dir in directions:
+        filename = f"gun{gun_index}_przemek_{dir}.png"
+        path = os.path.join("assets", "images", filename)
+        if os.path.exists(path):
+            image = pygame.image.load(path).convert_alpha()
+            scaled_image = pygame.transform.scale(image, (PRZEMEK_WIDTH, PRZEMEK_HEIGHT))
+            images[dir] = scaled_image
+        else:
+            images[dir] = None  # lub: pygame.Surface((PRZEMEK_WIDTH, PRZEMEK_HEIGHT))
+
+    return images
+
 
 # Ikonka
 icon_path = os.path.join("assets", "images", "icon-png.png")
@@ -58,11 +81,18 @@ def draw_text_centered(text, size=36, color=BLACK, duration=2):
     time.sleep(duration)
 
 def get_start_positions():
-    przemek = pygame.Rect(WIDTH - 100, 100, PLAYER_WIDTH, PLAYER_HEIGHT)
-    oliwia = pygame.Rect(100, HEIGHT - 150, PLAYER_WIDTH, PLAYER_HEIGHT)
+
+    # Przemek po prawej stronie
+    przemek = pygame.Rect(WIDTH - PRZEMEK_WIDTH - 20, 100, PRZEMEK_WIDTH, PRZEMEK_HEIGHT)
+
+    # Oliwia po lewej stronie
+    oliwia = pygame.Rect(20, HEIGHT - OLIWIA_HEIGHT - 20, OLIWIA_WIDTH, OLIWIA_HEIGHT)
+
     return przemek, oliwia
 
 def game_loop(user_choices):
+    bullet_img_raw = pygame.image.load("assets/images/bullet.png").convert_alpha()
+    bullet_img = pygame.transform.scale(bullet_img_raw, (BULLET_SIZE, BULLET_SIZE))
 
     baby_bg = pygame.image.load(os.path.join("assets", "images", "baby_bg.jpg"))
     fail_bg = pygame.image.load(os.path.join("assets", "images", "fail_bg.jpg"))
@@ -75,6 +105,8 @@ def game_loop(user_choices):
 
     gun_name = user_choices["gun_name"]
     vehicle_name = user_choices["vehicle_name"]
+    oliwia_image_file = VEHICLE_OLIWIA_IMAGES.get(vehicle_name)
+    oliwia_image = pygame.image.load(os.path.join("assets", "images", oliwia_image_file)).convert_alpha()
 
     gun_stats = GUN_STATS.get(gun_name, {"speed": 10, "cooldown": 1.0})
     vehicle_stats = VEHICLE_STATS.get(vehicle_name, {"max_speed": 6, "acceleration": 0.2, "deceleration": 0.2})
@@ -97,6 +129,10 @@ def game_loop(user_choices):
 
     przemek, oliwia = get_start_positions()
 
+    gun_name = user_choices["gun_name"]
+    przemek_imgs = load_przemek_images(gun_name)
+    current_przemek_image = przemek_imgs["left"]
+
     while round_number <= MAX_ROUNDS:
         round_start_time = time.time()
         bullets.clear()
@@ -107,8 +143,12 @@ def game_loop(user_choices):
 
         # --- Pokaż planszę i zagraj efekt odliczania
         screen.blit(game_bg, (0, 0))
-        pygame.draw.rect(screen, RED, przemek)
-        pygame.draw.rect(screen, BLUE, oliwia)
+        if current_przemek_image:
+            screen.blit(current_przemek_image, (przemek.x, przemek.y))
+        else:
+            pygame.draw.rect(screen, RED, przemek)
+        screen.blit(oliwia_image, oliwia)
+
 
         timer_text = font.render(f"Zegar tyka: {ROUND_TIME} s", True, BLACK)
         screen.blit(timer_text, (WIDTH // 2 - 150, 30))
@@ -151,6 +191,11 @@ def game_loop(user_choices):
             if keys[pygame.K_DOWN]:
                 przemek.y += 5
                 direction = "down"
+
+            if direction in przemek_imgs and przemek_imgs [direction]:
+                current_przemek_image = przemek_imgs[direction]
+            else:
+                current_przemek_image = None
 
             # Ograniczenie pozycji Przemka do granic okna gry
             przemek.x = max(0, min(przemek.x, WIDTH - przemek.width))
@@ -198,7 +243,7 @@ def game_loop(user_choices):
                 bullet["rect"].x += dx
                 bullet["rect"].y += dy
 
-                pygame.draw.rect(screen, BLACK, bullet["rect"])
+                screen.blit(bullet_img, bullet["rect"])
 
                 if bullet["rect"].colliderect(oliwia):
                     przemek_score += 1
@@ -224,9 +269,12 @@ def game_loop(user_choices):
                 running = False
 
             # Rysowanie graczy i czasu
-            pygame.draw.rect(screen, RED, przemek)
-            pygame.draw.rect(screen, BLUE, oliwia)
+            if current_przemek_image:
+                screen.blit(current_przemek_image, (przemek.x, przemek.y))
+            else:
+                pygame.draw.rect(screen, RED, przemek)
 
+            screen.blit(oliwia_image, oliwia)
             timer_text = font.render(f"Zegar tyka: {remaining_time} s", True, BLACK)
             screen.blit(timer_text, (WIDTH // 2 - 150, 30))
 
