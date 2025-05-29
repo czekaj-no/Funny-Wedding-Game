@@ -36,7 +36,7 @@ PLAYER_WIDTH, PLAYER_HEIGHT = 60, 80
 BULLET_SIZE = 12
 
 MAX_ROUNDS = 5
-ROUND_TIME = 4
+ROUND_TIME = 45
 
 pygame.init()
 play_music(GAME_MUSIC)
@@ -45,6 +45,10 @@ pygame.display.set_caption("Plemnikator 3000")
 
 # Wczytanie obrazków Przemka z bronią dla każdej broni i kierunku
 
+def get_path(*parts):
+    base_path = getattr(sys, '_MEIPASS', os.path.abspath("."))
+    return os.path.join(base_path, *parts)
+
 def load_przemek_images(gun_name):
     gun_index = [g[0] for g in GUNS].index(gun_name) + 1
     directions = ["left", "right", "up", "down"]
@@ -52,7 +56,7 @@ def load_przemek_images(gun_name):
 
     for dir in directions:
         filename = f"gun{gun_index}_przemek_{dir}.png"
-        path = os.path.join("assets", "images", filename)
+        path = get_path("assets", "images", filename)
         if os.path.exists(path):
             image = pygame.image.load(path).convert_alpha()
             scaled_image = pygame.transform.scale(image, (PRZEMEK_WIDTH, PRZEMEK_HEIGHT))
@@ -64,7 +68,7 @@ def load_przemek_images(gun_name):
 
 
 # Ikonka
-icon_path = os.path.join("assets", "images", "icon-png.png")
+icon_path = get_path("assets", "images", "icon-png.png")
 if os.path.exists(icon_path):
     pygame.display.set_icon(pygame.image.load(icon_path))
 
@@ -96,23 +100,22 @@ def game_loop(user_choices):
 
 
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
-    game_bg = pygame.image.load(os.path.join("assets", "images", "game_bg.jpg"))
+    game_bg = pygame.image.load(get_path("assets", "images", "game_bg.jpg"))
     play_music(GAME_MUSIC)
-    icon_path = os.path.join("assets", "images", "icon.png")
+    icon_path = get_path("assets", "images", "icon.png")
     pygame.display.set_icon(pygame.image.load(icon_path))
     pygame.display.set_caption("Plemnikator 3000")
-    bullet_img_raw = pygame.image.load("assets/images/bullet.png").convert_alpha()
+    bullet_img_raw = pygame.image.load(get_path("assets", "images", "bullet.png")).convert_alpha()
     gun_name = user_choices["gun_name"]
     bullet_width, bullet_height = GUN_STATS[gun_name]["size"]
     bullet_img = pygame.transform.scale(bullet_img_raw, (bullet_width, bullet_height))
-    baby_bg = pygame.image.load(os.path.join("assets", "images", "baby_bg.jpg"))
-    fail_bg = pygame.image.load(os.path.join("assets", "images", "fail_bg.jpg"))
-
+    baby_bg = pygame.image.load(get_path("assets", "images", "baby_bg.jpg"))
+    fail_bg = pygame.image.load(get_path("assets", "images", "fail_bg.jpg"))
 
     gun_name = user_choices["gun_name"]
     vehicle_name = user_choices["vehicle_name"]
     oliwia_image_file = VEHICLE_OLIWIA_IMAGES.get(vehicle_name)
-    oliwia_image = pygame.image.load(os.path.join("assets", "images", oliwia_image_file)).convert_alpha()
+    oliwia_image = pygame.image.load(get_path("assets", "images", oliwia_image_file)).convert_alpha()
 
     gun_stats = GUN_STATS.get(gun_name, {"speed": 10, "cooldown": 1.0})
     vehicle_stats = VEHICLE_STATS.get(vehicle_name, {"max_speed": 6, "acceleration": 0.2, "deceleration": 0.2})

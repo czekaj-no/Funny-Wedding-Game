@@ -8,12 +8,14 @@ from sounds_config import END_MUSIC, GUI_MUSIC
 from PIL import Image
 import os
 from end_story import generate_story
+import sys
 from gui import start_gui
 from game.engine import game_loop
 
-
 def img_path(name):
-    return os.path.join("assets", "images", name)
+    base_path = getattr(sys, '_MEIPASS', os.path.abspath("."))
+    return os.path.join(base_path, "assets", "images", name)
+
 
 def show_end_screen(score, gun_name, vehicle_name, gun_image, vehicle_image):
 

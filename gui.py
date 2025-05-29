@@ -10,6 +10,7 @@ from config import (
     VEHICLES
 )
 import os
+import sys
 from PIL import Image
 import tkinter.messagebox as mbox
 from sound_manager import play_music, stop_music
@@ -19,10 +20,15 @@ from sounds_config import GUI_MUSIC
 
 # Image path helper
 def img_path(name):
-    return os.path.join("assets", "images", name)
+    base_path = getattr(sys, '_MEIPASS', os.path.abspath("."))
+    return os.path.join(base_path, "assets", "images", name)
+
 
 def load_intro_text():
-    with open("intro.txt", "r", encoding="utf-8") as file:
+    base_path = getattr(sys, '_MEIPASS', os.path.abspath("."))
+    intro_path = os.path.join(base_path, "assets", "intro.txt")
+
+    with open(intro_path, "r", encoding="utf-8") as file:
         text = file.read()
         return text.format(
             WEDDING_DATE_FORMATTED=WEDDING_DATE_FORMATTED,
@@ -31,6 +37,7 @@ def load_intro_text():
             PLAYER1_DESCRIPTION=PLAYER1_DESCRIPTION,
             PLAYER2_DESCRIPTION=PLAYER2_DESCRIPTION
         )
+
 
 def start_gui():
     selected_data = {}
@@ -49,7 +56,7 @@ def start_gui():
     y = int((screen_height / 2) - (window_height / 2))
 
     root.geometry(f"{window_width}x{window_height}+{x}+{y}")
-    icon_path = os.path.join("assets", "images", "icon.ico")
+    icon_path = img_path("icon.ico")
     root.iconbitmap(default=icon_path)
 
     # Title
