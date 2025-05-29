@@ -47,8 +47,8 @@ def start_gui():
     root = ctk.CTk()
     play_music(GUI_MUSIC)
     root.title("Plemnikator 3000: Nasienie Przeznaczenia")
-    window_width = 1400
-    window_height = 1000
+    window_width = 1280
+    window_height = 800
 
     screen_width = root.winfo_screenwidth()
     screen_height = root.winfo_screenheight()
@@ -61,13 +61,13 @@ def start_gui():
 
     # Title
     title_img = Image.open(img_path("title.png"))
-    title_photo = CTkImage(light_image=title_img, size=(350, 140))
+    title_photo = CTkImage(light_image=title_img, size=(250, 100))
     title_label = ctk.CTkLabel(root, image=title_photo, text="")
     title_label.pack(pady=10)
 
     # Subtitle
     subtitle_img = Image.open(img_path("subtitle.png"))
-    subtitle_photo = CTkImage(light_image=subtitle_img, size=(300, 60))
+    subtitle_photo = CTkImage(light_image=subtitle_img, size=(200, 40))
     subtitle_label = ctk.CTkLabel(root, image=subtitle_photo, text="")
     subtitle_label.pack(pady=5)
 
@@ -75,22 +75,22 @@ def start_gui():
     frame = ctk.CTkFrame(root)
     frame.pack(pady=10, expand=True, fill="both")
 
-    left_frame = ctk.CTkFrame(frame, width=400)
+    left_frame = ctk.CTkFrame(frame, width=350)
     left_frame.pack(side="left", padx=20, fill="y")
 
     center_frame = ctk.CTkFrame(frame)
     center_frame.pack(side="left", padx=20, fill="both", expand=True)
 
-    right_frame = ctk.CTkFrame(frame, width=400)
+    right_frame = ctk.CTkFrame(frame, width=350)
     right_frame.pack(side="right", padx=20, fill="y")
 
     # --- Player 1 (Oliwia) ---
-    player1_label = ctk.CTkLabel(left_frame, text=PLAYER1_DESCRIPTION.upper(), font=("Arial", 18, "bold"))
+    player1_label = ctk.CTkLabel(left_frame, text=PLAYER1_DESCRIPTION.upper(), font=("Arial", 16, "bold"))
     player1_label.pack(pady=(10, 5))
 
     oliwia_img = CTkImage(
         light_image=Image.open(img_path("oliwia.png")),
-        size=(300, 400)
+        size=(240, 320)
     )
     oliwia_label = ctk.CTkLabel(left_frame, image=oliwia_img, text="")
     oliwia_label.pack(pady=10)
@@ -99,12 +99,12 @@ def start_gui():
     vehicle_label.pack(pady=(10, 0))
 
     vehicle_var = ctk.StringVar()
-    vehicle_dropdown = ctk.CTkComboBox(left_frame, values=[v[0] for v in VEHICLES], variable=vehicle_var, cursor="hand2")
+    vehicle_dropdown = ctk.CTkComboBox(left_frame, values=[v[0] for v in VEHICLES], variable=vehicle_var, cursor="hand2", font=("Arial", 14), width=180, justify="center" )
     vehicle_dropdown.pack(pady=5)
 
     default_preview = CTkImage(
         light_image=Image.open(img_path("questionmark.png")),
-        size=(240, 180)
+        size=(160, 120)
     )
 
     vehicle_preview = ctk.CTkLabel(left_frame, image=default_preview, text="")
@@ -112,12 +112,12 @@ def start_gui():
     vehicle_preview.pack(pady=5)
 
     # --- Player 2 (Przemek) ---
-    player2_label = ctk.CTkLabel(right_frame, text=PLAYER2_DESCRIPTION.upper(), font=("Arial", 18, "bold"))
+    player2_label = ctk.CTkLabel(right_frame, text=PLAYER2_DESCRIPTION.upper(), font=("Arial", 16, "bold"))
     player2_label.pack(pady=(10, 5))
 
     przemek_img = CTkImage(
         light_image=Image.open(img_path("przemek.png")),
-        size=(300, 400)
+        size=(240, 320)
     )
     przemek_label = ctk.CTkLabel(right_frame, image=przemek_img, text="")
     przemek_label.pack(pady=10)
@@ -126,7 +126,7 @@ def start_gui():
     gun_label.pack(pady=(10, 0))
 
     gun_var = ctk.StringVar()
-    gun_dropdown = ctk.CTkComboBox(right_frame, values=[g[0] for g in GUNS], variable=gun_var, cursor="hand2")
+    gun_dropdown = ctk.CTkComboBox(right_frame, values=[g[0] for g in GUNS], variable=gun_var, cursor="hand2", font=("Arial", 14), width=180, justify="center")
     gun_dropdown.pack(pady=5)
 
     gun_preview = ctk.CTkLabel(right_frame, image=default_preview, text="")
@@ -137,7 +137,7 @@ def start_gui():
     intro_label = ctk.CTkLabel(
         center_frame,
         text=load_intro_text(),
-        font=("Arial", 16),
+        font=("Arial", 14),
         justify="center",
         wraplength=400
     )
@@ -173,13 +173,13 @@ def start_gui():
 
     start_button = ctk.CTkButton(
         center_frame,
-        text="START GAME",
+        text="GRAJMY",
         command=start_game,
         fg_color="#ed1c24",
         hover_color="#a50f19",
         font=("Arial", 20, "bold"),
-        width=250,
-        height=60
+        width=200,
+        height=48
     )
     start_button.pack(pady=10)
 
@@ -189,7 +189,7 @@ def start_gui():
             if name == choice:
                 img = CTkImage(
                     light_image=Image.open(img_path(filename)),
-                    size=(240, 180)
+                    size=(160, 120)
                 )
                 vehicle_preview.configure(image=img)
                 vehicle_preview.image = img
@@ -199,7 +199,7 @@ def start_gui():
             if name == choice:
                 img = CTkImage(
                     light_image=Image.open(img_path(filename)),
-                    size=(240, 180)
+                    size=(160, 120)
                 )
                 gun_preview.configure(image=img)
                 gun_preview.image = img

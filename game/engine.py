@@ -21,27 +21,22 @@ from sounds_config import (
 os.environ['SDL_VIDEO_CENTERED'] = '1'
 
 # Stałe
-WIDTH, HEIGHT = 1400, 1000
+WIDTH, HEIGHT = 1280, 800
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 
-PRZEMEK_WIDTH = 140
-PRZEMEK_HEIGHT = 140
+PRZEMEK_WIDTH = 112
+PRZEMEK_HEIGHT = 112
 
-OLIWIA_WIDTH = 132
-OLIWIA_HEIGHT = 99
+OLIWIA_WIDTH = 100
+OLIWIA_HEIGHT = 74
 
 
-PLAYER_WIDTH, PLAYER_HEIGHT = 60, 80
-BULLET_SIZE = 12
+PLAYER_WIDTH, PLAYER_HEIGHT = 48, 64
+BULLET_SIZE = 10
 
 MAX_ROUNDS = 5
 ROUND_TIME = 45
-
-pygame.init()
-play_music(GAME_MUSIC)
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Plemnikator 3000")
 
 # Wczytanie obrazków Przemka z bronią dla każdej broni i kierunku
 
@@ -66,17 +61,7 @@ def load_przemek_images(gun_name):
 
     return images
 
-
-# Ikonka
-icon_path = get_path("assets", "images", "icon-png.png")
-if os.path.exists(icon_path):
-    pygame.display.set_icon(pygame.image.load(icon_path))
-
-font = pygame.font.SysFont("Arial", 25)
-clock = pygame.time.Clock()
-
-
-def draw_text_centered(text, size=36, color=BLACK, duration=2):
+def draw_text_centered(text, size=30, color=BLACK, duration=2):
     font_obj = pygame.font.SysFont("Arial", size)
     rendered = font_obj.render(text, True, color)
     rect = rendered.get_rect(center=(WIDTH // 2, HEIGHT // 2))
@@ -95,6 +80,17 @@ def get_start_positions():
     return przemek, oliwia
 
 def game_loop(user_choices):
+    pygame.init()
+    play_music(GAME_MUSIC)
+    pygame.display.set_caption("Plemnikator 3000")
+
+    # Ikonka
+    icon_path = get_path("assets", "images", "icon-png.png")
+    if os.path.exists(icon_path):
+        pygame.display.set_icon(pygame.image.load(icon_path))
+
+    font = pygame.font.SysFont("Arial", 20)
+    clock = pygame.time.Clock()
 
     # Skalowanie pocisku do rozmiaru broni
 
