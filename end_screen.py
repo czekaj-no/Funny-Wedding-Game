@@ -110,10 +110,17 @@ def show_end_screen(score, gun_name, vehicle_name, gun_image, vehicle_image):
     def play_again():
         stop_music()
         root.destroy()
+
         from gui import start_gui
         from game.engine import game_loop
+        import pygame
+
         user_choices = start_gui()
-        game_loop(user_choices)
+
+        if user_choices:
+            pygame.init()
+            game_loop(user_choices)
+            pygame.quit()
 
     play_button = ctk.CTkButton(center_frame, text="ZAGRAJ PONOWNIE", command=play_again,
                                 fg_color="#ed1c24", hover_color="#a50f19", font=("Arial", 18, "bold"), width=250, height=60)
@@ -124,4 +131,3 @@ def show_end_screen(score, gun_name, vehicle_name, gun_image, vehicle_image):
     exit_button.pack()
 
     root.mainloop()
-

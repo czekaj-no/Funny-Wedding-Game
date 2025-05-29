@@ -36,7 +36,7 @@ PLAYER_WIDTH, PLAYER_HEIGHT = 60, 80
 BULLET_SIZE = 12
 
 MAX_ROUNDS = 5
-ROUND_TIME = 2 # sekundy
+ROUND_TIME = 4
 
 pygame.init()
 play_music(GAME_MUSIC)
@@ -91,17 +91,23 @@ def get_start_positions():
     return przemek, oliwia
 
 def game_loop(user_choices):
-    bullet_img_raw = pygame.image.load("assets/images/bullet.png").convert_alpha()
-    bullet_img = pygame.transform.scale(bullet_img_raw, (BULLET_SIZE, BULLET_SIZE))
 
-    baby_bg = pygame.image.load(os.path.join("assets", "images", "baby_bg.jpg"))
-    fail_bg = pygame.image.load(os.path.join("assets", "images", "fail_bg.jpg"))
+    # Skalowanie pocisku do rozmiaru broni
+
+
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     game_bg = pygame.image.load(os.path.join("assets", "images", "game_bg.jpg"))
     play_music(GAME_MUSIC)
     icon_path = os.path.join("assets", "images", "icon.png")
     pygame.display.set_icon(pygame.image.load(icon_path))
     pygame.display.set_caption("Plemnikator 3000")
+    bullet_img_raw = pygame.image.load("assets/images/bullet.png").convert_alpha()
+    gun_name = user_choices["gun_name"]
+    bullet_width, bullet_height = GUN_STATS[gun_name]["size"]
+    bullet_img = pygame.transform.scale(bullet_img_raw, (bullet_width, bullet_height))
+    baby_bg = pygame.image.load(os.path.join("assets", "images", "baby_bg.jpg"))
+    fail_bg = pygame.image.load(os.path.join("assets", "images", "fail_bg.jpg"))
+
 
     gun_name = user_choices["gun_name"]
     vehicle_name = user_choices["vehicle_name"]
@@ -206,7 +212,7 @@ def game_loop(user_choices):
                 play_sound(GUN_SHOT)
                 last_shot_time = time.time()
                 bullet = {
-                    "rect": pygame.Rect(przemek.centerx, przemek.centery, BULLET_SIZE, BULLET_SIZE),
+                    "rect": pygame.Rect(przemek.centerx, przemek.centery, bullet_width, bullet_height),
                     "dir": direction
                 }
                 bullets.append(bullet)
