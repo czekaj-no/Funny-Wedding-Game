@@ -76,7 +76,7 @@
  [],
  False,
  False,
- 1748551714,
+ 1748599896,
  [('runw.exe',
    'C:\\Users\\magda\\PycharmProjects\\Plemnikator3000\\.venv\\Lib\\site-packages\\PyInstaller\\bootloader\\Windows-64bit-intel\\runw.exe',
    'EXECUTABLE')],
