@@ -45,6 +45,7 @@ def start_gui():
     ctk.set_default_color_theme("green")
 
     root = ctk.CTk()
+    root.update()
     play_music(GUI_MUSIC)
     root.title("Plemnikator 3000: Nasienie Przeznaczenia")
     window_width = 1280

@@ -2,6 +2,8 @@ import os
 import pygame
 import sys
 import time
+import ctypes
+
 
 from game.items import GUN_STATS, VEHICLE_STATS
 from config import PLAYER1_NAME, PLAYER2_NAME, VEHICLE_OLIWIA_IMAGES
@@ -17,8 +19,6 @@ from sounds_config import (
     ROUND_START,
     BABY
 )
-
-os.environ['SDL_VIDEO_CENTERED'] = '1'
 
 # Stałe
 WIDTH, HEIGHT = 1280, 800
@@ -61,14 +61,6 @@ def load_przemek_images(gun_name):
 
     return images
 
-def draw_text_centered(text, size=30, color=BLACK, duration=2):
-    font_obj = pygame.font.SysFont("Arial", size)
-    rendered = font_obj.render(text, True, color)
-    rect = rendered.get_rect(center=(WIDTH // 2, HEIGHT // 2))
-    screen.blit(rendered, rect)
-    pygame.display.update()
-    time.sleep(duration)
-
 def get_start_positions():
 
     # Przemek po prawej stronie
@@ -80,27 +72,31 @@ def get_start_positions():
     return przemek, oliwia
 
 def game_loop(user_choices):
+    try:
+        ctypes.windll.user32.SetProcessDPIAware()
+    except:
+        pass
+
+    os.environ['SDL_VIDEO_CENTERED'] = '1'
+
     pygame.init()
+
+    # Muzyka i ikonka
     play_music(GAME_MUSIC)
     pygame.display.set_caption("Plemnikator 3000")
-
-    # Ikonka
-    icon_path = get_path("assets", "images", "icon-png.png")
+    icon_path = get_path("assets", "images", "icon.png")
     if os.path.exists(icon_path):
         pygame.display.set_icon(pygame.image.load(icon_path))
 
+    # Skaluje okno automatycznie
+    screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.SCALED)
+
+    # Czcionka, zegar
     font = pygame.font.SysFont("Arial", 20)
     clock = pygame.time.Clock()
 
-    # Skalowanie pocisku do rozmiaru broni
-
-
-    screen = pygame.display.set_mode((WIDTH, HEIGHT))
+    # Tło i grafiki
     game_bg = pygame.image.load(get_path("assets", "images", "game_bg.jpg"))
-    play_music(GAME_MUSIC)
-    icon_path = get_path("assets", "images", "icon.png")
-    pygame.display.set_icon(pygame.image.load(icon_path))
-    pygame.display.set_caption("Plemnikator 3000")
     bullet_img_raw = pygame.image.load(get_path("assets", "images", "bullet.png")).convert_alpha()
     gun_name = user_choices["gun_name"]
     bullet_width, bullet_height = GUN_STATS[gun_name]["size"]
@@ -158,7 +154,7 @@ def game_loop(user_choices):
         timer_text = font.render(f"Zegar tyka: {ROUND_TIME} s", True, BLACK)
         screen.blit(timer_text, (WIDTH // 2 - 150, 30))
 
-        score_text = font.render(f"{PLAYER2_NAME}, masz {przemek_score} z możliwych {MAX_ROUNDS} bejbików", True, BLACK)
+        score_text = font.render(f"Przemek, masz {przemek_score} z możliwych {MAX_ROUNDS} bejbików", True, BLACK)
         screen.blit(score_text, (30, 30))
 
         pygame.display.update()

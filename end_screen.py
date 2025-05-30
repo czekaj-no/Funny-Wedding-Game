@@ -24,6 +24,7 @@ def show_end_screen(score, gun_name, vehicle_name, gun_image, vehicle_image):
     ctk.set_default_color_theme("green")
 
     root = ctk.CTk()
+    root.update()
     play_music(END_MUSIC)
     root.title("Wyniki - Plemnikator 3000")
     icon_path = img_path("icon.png")
