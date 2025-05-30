@@ -279,7 +279,7 @@ def game_loop(user_choices):
             timer_text = font.render(f"Zegar tyka: {remaining_time} s", True, BLACK)
             screen.blit(timer_text, (WIDTH // 2 - 150, 30))
 
-            score_text = font.render(f"{PLAYER2_NAME}, masz {przemek_score} z możliwych {MAX_ROUNDS} bejbików", True, BLACK)
+            score_text = font.render(f"Przemek, masz {przemek_score} z możliwych {MAX_ROUNDS} bejbików", True, BLACK)
             screen.blit(score_text, (30, 30))
 
             pygame.display.update()

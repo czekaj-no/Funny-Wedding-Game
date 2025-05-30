@@ -45,6 +45,8 @@ def start_gui():
     ctk.set_default_color_theme("green")
 
     root = ctk.CTk()
+    root.withdraw()
+
     root.update()
     play_music(GUI_MUSIC)
     root.title("Plemnikator 3000: Nasienie Przeznaczenia")
@@ -59,6 +61,7 @@ def start_gui():
     root.geometry(f"{window_width}x{window_height}+{x}+{y}")
     icon_path = img_path("icon.ico")
     root.iconbitmap(default=icon_path)
+    root.deiconify()  # Pokaż gotowe okno
 
     # Title
     title_img = Image.open(img_path("title.png"))
@@ -85,7 +88,7 @@ def start_gui():
     right_frame = ctk.CTkFrame(frame, width=350)
     right_frame.pack(side="right", padx=20, fill="y")
 
-    # --- Player 1 (Oliwia) ---
+    # --- Player 1  ---
     player1_label = ctk.CTkLabel(left_frame, text=PLAYER1_DESCRIPTION.upper(), font=("Arial", 16, "bold"))
     player1_label.pack(pady=(10, 5))
 

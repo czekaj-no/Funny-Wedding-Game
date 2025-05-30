@@ -1,16 +1,14 @@
-from email.policy import linesep_splitter
 
 import customtkinter as ctk
 from customtkinter import CTkImage
 from config import PLAYER1_NAME, PLAYER2_NAME
 from sound_manager import play_music, stop_music
-from sounds_config import END_MUSIC, GUI_MUSIC
+from sounds_config import END_MUSIC
 from PIL import Image
 import os
 from end_story import generate_story
 import sys
-from gui import start_gui
-from game.engine import game_loop
+
 
 def img_path(name):
     base_path = getattr(sys, '_MEIPASS', os.path.abspath("."))
@@ -24,6 +22,8 @@ def show_end_screen(score, gun_name, vehicle_name, gun_image, vehicle_image):
     ctk.set_default_color_theme("green")
 
     root = ctk.CTk()
+    root.withdraw()  # 🟡 Ukryj zanim wszystko będzie gotowe
+
     root.update()
     play_music(END_MUSIC)
     root.title("Wyniki - Plemnikator 3000")
@@ -37,6 +37,8 @@ def show_end_screen(score, gun_name, vehicle_name, gun_image, vehicle_image):
     y = int((screen_height / 2) - (window_height / 2))
     root.geometry(f"{window_width}x{window_height}+{x}+{y}")
     root.iconbitmap(default=img_path("icon.ico"))
+    root.deiconify()  # Pokaż gotowe okno
+
     header_img = Image.open(img_path("end_header.png"))
     header_photo = CTkImage(light_image=header_img, size=(600, 140))
     header_label = ctk.CTkLabel(root, image=header_photo, text="")
