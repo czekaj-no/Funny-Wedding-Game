@@ -1,7 +1,4 @@
 from gui import start_gui
-import os
-
-os.environ['SDL_AUDIODRIVER'] = 'directsound'
 
 from game.engine import game_loop
 

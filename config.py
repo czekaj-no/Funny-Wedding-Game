@@ -4,8 +4,8 @@ from datetime import datetime
 
 load_dotenv()
 
-PLAYER1_NAME = os.getenv("PLAYER1_NAME", "Oliwia")
-PLAYER2_NAME = os.getenv("PLAYER2_NAME", "Przemek")
+PLAYER1_NAME = os.getenv("PLAYER1_NAME", "Ucieka")
+PLAYER2_NAME = os.getenv("PLAYER2_NAME", "Goni")
 
 PLAYER1_DESCRIPTION = os.getenv("PLAYER1_DESCRIPTION", "Player 1")
 PLAYER2_DESCRIPTION = os.getenv("PLAYER2_DESCRIPTION", "Player 2")
@@ -27,15 +27,15 @@ VEHICLES = [
     (os.getenv("VEHICLENAME5", "Taczka"), "vehicle5.png"),
 ]
 
-VEHICLE_OLIWIA_IMAGES = {
-    "Świnia": "oliwia_vehicle1.png",
-    "Widlak": "oliwia_vehicle2.png",
-    "Szambiarka": "oliwia_vehicle3.png",
-    "Foka": "oliwia_vehicle4.png",
-    "Taczka": "oliwia_vehicle5.png"
+VEHICLE_PLAYER1_IMAGES = {
+    "Świnia": "player1_vehicle1.png",
+    "Widlak": "player1_vehicle2.png",
+    "Szambiarka": "player1_vehicle3.png",
+    "Foka": "player1_vehicle4.png",
+    "Taczka": "player1_vehicle5.png"
 }
 
-raw_date = os.getenv("WEDDING_DATE", "2024-05-31")
+raw_date = os.getenv("WEDDING_DATE", "2025-06-15")
 
 polish_months = {
     1: "stycznia",
@@ -57,6 +57,6 @@ try:
     day = date_obj.day
     month = polish_months[date_obj.month]
     year = date_obj.year
-    WEDDING_DATE_FORMATTED = f"{day} {month} {year}"  # np. 31 maja 2024
+    WEDDING_DATE_FORMATTED = f"{day} {month} {year}"
 except ValueError:
-    WEDDING_DATE_FORMATTED = raw_date  # fallback jeśli format się nie zgadza
+    WEDDING_DATE_FORMATTED = raw_date

@@ -1,4 +1,3 @@
-
 import customtkinter as ctk
 from customtkinter import CTkImage
 from config import PLAYER1_NAME, PLAYER2_NAME
@@ -15,14 +14,14 @@ def img_path(name):
     return os.path.join(base_path, "assets", "images", name)
 
 
-def show_end_screen(score, gun_name, vehicle_name, gun_image, vehicle_image):
+def show_end_screen(score, gun_image, vehicle_image):
 
-    oliwia_score = 5 - score
+    player1_score = 5 - score
     ctk.set_appearance_mode("dark")
     ctk.set_default_color_theme("green")
 
     root = ctk.CTk()
-    root.withdraw()  # 🟡 Ukryj zanim wszystko będzie gotowe
+    root.withdraw()
 
     root.update()
     play_music(END_MUSIC)
@@ -37,7 +36,7 @@ def show_end_screen(score, gun_name, vehicle_name, gun_image, vehicle_image):
     y = int((screen_height / 2) - (window_height / 2))
     root.geometry(f"{window_width}x{window_height}+{x}+{y}")
     root.iconbitmap(default=img_path("icon.ico"))
-    root.deiconify()  # Pokaż gotowe okno
+    root.deiconify()
 
     header_img = Image.open(img_path("end_header.png"))
     header_photo = CTkImage(light_image=header_img, size=(600, 140))
@@ -45,8 +44,6 @@ def show_end_screen(score, gun_name, vehicle_name, gun_image, vehicle_image):
     header_label.pack(pady=10)
 
 
-
-    # --- Główna ramka
     frame = ctk.CTkFrame(root)
     frame.pack(pady=10, expand=True, fill="both")
 
@@ -63,11 +60,11 @@ def show_end_screen(score, gun_name, vehicle_name, gun_image, vehicle_image):
     p1_name = ctk.CTkLabel(left_frame, text=PLAYER1_NAME.upper(), font=("Arial", 28, "bold"))
     p1_name.pack(pady=(10, 5))
 
-    p1_img = CTkImage(light_image=Image.open(img_path("oliwia.png")), size=(220, 293))
+    p1_img = CTkImage(light_image=Image.open(img_path("player1_image.png")), size=(220, 293))
     p1_label = ctk.CTkLabel(left_frame, image=p1_img, text="")
     p1_label.pack(pady=10)
 
-    p1_score = ctk.CTkLabel(left_frame, text=f"UCIECZKA: {oliwia_score}/5", font=("Arial", 20))
+    p1_score = ctk.CTkLabel(left_frame, text=f"UCIECZKA: {player1_score}/5", font=("Arial", 20))
     p1_score.pack(pady=5)
 
     vehicle_text = ctk.CTkLabel(left_frame, text="POJAZD:", font=("Arial", 20))
@@ -81,7 +78,7 @@ def show_end_screen(score, gun_name, vehicle_name, gun_image, vehicle_image):
     p2_name = ctk.CTkLabel(right_frame, text=PLAYER2_NAME.upper(), font=("Arial", 28, "bold"))
     p2_name.pack(pady=(10, 5))
 
-    p2_img = CTkImage(light_image=Image.open(img_path("przemek.png")), size=(220, 293))
+    p2_img = CTkImage(light_image=Image.open(img_path("player2_image.png")), size=(220, 293))
     p2_label = ctk.CTkLabel(right_frame, image=p2_img, text="")
     p2_label.pack(pady=10)
 
@@ -98,12 +95,12 @@ def show_end_screen(score, gun_name, vehicle_name, gun_image, vehicle_image):
     # --- Story ---
     story_text, story_img_file = generate_story(score)
 
-    # Obrazek nad historią
+    # Images
     story_img = CTkImage(light_image=Image.open(img_path(story_img_file)), size=(300, 225))
     story_img_label = ctk.CTkLabel(center_frame, image=story_img, text="")
     story_img_label.pack(pady=(20, 10))
 
-    # Tekst historii
+    # --- Story ---
     story_label = ctk.CTkLabel(center_frame, text=story_text, wraplength=400, font=("Arial", 20), justify="center")
     story_label.pack(pady=(0, 40))
 

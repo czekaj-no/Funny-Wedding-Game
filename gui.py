@@ -17,7 +17,6 @@ from sound_manager import play_music, stop_music
 from sounds_config import GUI_MUSIC
 
 
-
 # Image path helper
 def img_path(name):
     base_path = getattr(sys, '_MEIPASS', os.path.abspath("."))
@@ -61,7 +60,7 @@ def start_gui():
     root.geometry(f"{window_width}x{window_height}+{x}+{y}")
     icon_path = img_path("icon.ico")
     root.iconbitmap(default=icon_path)
-    root.deiconify()  # Pokaż gotowe okno
+    root.deiconify()
 
     # Title
     title_img = Image.open(img_path("title.png"))
@@ -92,12 +91,12 @@ def start_gui():
     player1_label = ctk.CTkLabel(left_frame, text=PLAYER1_DESCRIPTION.upper(), font=("Arial", 16, "bold"))
     player1_label.pack(pady=(10, 5))
 
-    oliwia_img = CTkImage(
-        light_image=Image.open(img_path("oliwia.png")),
+    player1_image = CTkImage(
+        light_image=Image.open(img_path("player1_image.png")),
         size=(240, 320)
     )
-    oliwia_label = ctk.CTkLabel(left_frame, image=oliwia_img, text="")
-    oliwia_label.pack(pady=10)
+    player1_label = ctk.CTkLabel(left_frame, image=player1_image, text="")
+    player1_label.pack(pady=10)
 
     vehicle_label = ctk.CTkLabel(left_frame, text="Wybierz pojazd:", font=("Arial", 14, "bold"))
     vehicle_label.pack(pady=(10, 0))
@@ -115,16 +114,16 @@ def start_gui():
     vehicle_preview.image = default_preview
     vehicle_preview.pack(pady=5)
 
-    # --- Player 2 (Przemek) ---
+    # --- Player 2  ---
     player2_label = ctk.CTkLabel(right_frame, text=PLAYER2_DESCRIPTION.upper(), font=("Arial", 16, "bold"))
     player2_label.pack(pady=(10, 5))
 
-    przemek_img = CTkImage(
-        light_image=Image.open(img_path("przemek.png")),
+    player2_image = CTkImage(
+        light_image=Image.open(img_path("player2_image.png")),
         size=(240, 320)
     )
-    przemek_label = ctk.CTkLabel(right_frame, image=przemek_img, text="")
-    przemek_label.pack(pady=10)
+    player2_label = ctk.CTkLabel(right_frame, image=player2_image, text="")
+    player2_label.pack(pady=10)
 
     gun_label = ctk.CTkLabel(right_frame, text="Wybierz broń:", font=("Arial", 14, "bold"))
     gun_label.pack(pady=(10, 0))
@@ -156,17 +155,16 @@ def start_gui():
             mbox.showerror("Hola, hola!", "Wybierz broń i pojazd!")
             return
         elif not gun:
-            mbox.showerror("Hola, hola!", "Wybierz broń dla Przemka!")
+            mbox.showerror("Hola, hola!", f"A czym {PLAYER2_NAME} będzie strzelać? Wybierz broń! ")
             return
         elif not vehicle:
-            mbox.showerror("Hola, hola!", "Wybierz pojazd dla Oliwii!")
+            mbox.showerror("Hola, hola!", f"A czym {PLAYER1_NAME} będzie uciekać? Wybierz pojazd!")
             return
 
 
         selected_data["gun_name"] = gun
         selected_data["vehicle_name"] = vehicle
 
-        # Dodajemy ID broni i pojazdu (np. gun5, vehicle3)
         selected_data["gun_id"] = next((f"gun{i + 1}" for i, g in enumerate(GUNS) if g[0] == gun), None)
         selected_data["vehicle_id"] = next((f"vehicle{i + 1}" for i, v in enumerate(VEHICLES) if v[0] == vehicle), None)
 

@@ -1,9 +1,9 @@
 GUN_STATS = {
-    "Miotacz Spermy": {"speed": 10, "cooldown": 1.0, "size": (100, 30)},   # rozciągnięty, jak ogień
-    "Bazooka Płodności": {"speed": 8, "cooldown": 0.6, "size": (60, 60)},  # klasyczna kula
-    "Armata Rozkoszy": {"speed": 6, "cooldown": 2.0, "size": (100, 100)},    # powolna, duża bomba
-    "Karabin Rozrodczy": {"speed": 15, "cooldown": 0.3, "size": (15, 15)}, # szybka pestka
-    "Katapulta Namiętności": {"speed": 7, "cooldown": 2.2, "size": (140, 140)},  # wielki grzmot
+    "Miotacz Spermy": {"speed": 10, "cooldown": 1.0, "size": (100, 30)},
+    "Bazooka Płodności": {"speed": 8, "cooldown": 0.6, "size": (60, 60)},
+    "Armata Rozkoszy": {"speed": 6, "cooldown": 2.0, "size": (100, 100)},
+    "Karabin Rozrodczy": {"speed": 15, "cooldown": 0.3, "size": (15, 15)},
+    "Katapulta Namiętności": {"speed": 7, "cooldown": 2.2, "size": (140, 140)},
 }
 
 VEHICLE_STATS = {
