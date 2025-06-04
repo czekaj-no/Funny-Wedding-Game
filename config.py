@@ -4,8 +4,8 @@ from datetime import datetime
 
 load_dotenv()
 
-PLAYER1_NAME = os.getenv("PLAYER1_NAME", "Ucieka")
-PLAYER2_NAME = os.getenv("PLAYER2_NAME", "Goni")
+PLAYER1_NAME = os.getenv("PLAYER1_NAME", "Player 1")
+PLAYER2_NAME = os.getenv("PLAYER2_NAME", "Player 2")
 
 PLAYER1_DESCRIPTION = os.getenv("PLAYER1_DESCRIPTION", "Player 1")
 PLAYER2_DESCRIPTION = os.getenv("PLAYER2_DESCRIPTION", "Player 2")
