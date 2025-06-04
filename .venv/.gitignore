@@ -5,3 +5,4 @@ __pycache__/
 .idea/
 assets/*.ogg
 assets/*.wav
+assets/images/*
